@@ -16,8 +16,9 @@ namespace Talabat.core.Entites
         }
 
         public string Id { get; set; }
-        public string paymentIntend { get; set; }
-        
+        public string paymentIntendId { get; set; }
+
+
         public string ClintSecret { get; set; }
 
         public int?  DelveryMethodId  { get; set; }

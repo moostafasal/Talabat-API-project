@@ -17,7 +17,7 @@ namespace Talabat.Serves
         private readonly IBascketReposatry _bascket;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PaymentServes(IConfiguration configuration,IBascketReposatry bascket,IUnitOfWork unitOfWork)
+        public PaymentServes(IConfiguration configuration, IBascketReposatry bascket, IUnitOfWork unitOfWork)
         {
             Configuration = configuration;
             _bascket = bascket;
@@ -31,7 +31,7 @@ namespace Talabat.Serves
             //secretke
             StripeConfiguration.ApiKey = Configuration["stripeSettings:Secretkey"];
             var basket = await _bascket.GetBasketAsync(basketId);
-            if (basket == null) return null;
+            if (basket == null) return null; 
             //delvery method
             var shpingPrice = 0m;
             if (basket.DelveryMethodId.HasValue)
@@ -46,18 +46,42 @@ namespace Talabat.Serves
                 var product = await _unitOfWork.reposatery<product>().GetIdAsync(item.Id);
                 if (product.Price != item.price)
                     item.price = product.Price;
-                    
+
 
             }
+            var serveis = new PaymentIntentService();
             PaymentIntent intend;
             //create payment intend
-            if (string.IsNullOrEmpty(basket.paymentIntend))
+            if (string.IsNullOrEmpty(basket.paymentIntendId))
             {
-                var options = new PaymentIntentCreateOptions();
+                var options = new PaymentIntentCreateOptions()
+                {
+
+                    Amount =(long)basket.Items.Sum(item => item.Quantity * item.price * 100) + (long)shpingPrice * 100,
+                    Currency="usd",
+                    PaymentMethodTypes = new List<string>() { "card" }
+                };
+                 intend=  await  serveis.CreateAsync(options);
+                basket.paymentIntendId = intend.Id;
+                basket.ClintSecret = intend.ClientSecret;
+
+
+            }
+            else
+            {
+                var option = new PaymentIntentUpdateOptions()
+                {
+                    Amount =(long)basket.Items.Sum(item => item.Quantity * item.price * 100) + (long)shpingPrice * 100
+
+                };
+                await serveis.UpdateAsync(basket.paymentIntendId, option);
             }
 
-            return
-            
-        }
+
+            await _bascket.UpdatBascket(basket);
+            return basket;
+
+
+        } 
     }
 }
