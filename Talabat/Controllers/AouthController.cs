@@ -73,9 +73,9 @@ namespace Talabat.Controllers
         }
         //regester with google acount
         //[HttpPost("RegisrtGoogle")]
-        
+
         ////endpoint for chech if email is exist
-        //[HttpGet("emailexist")]
+        [HttpGet("emailexist")]
         public async Task<ActionResult<bool>> CheckEmailExistAsync([FromQuery] string email)
         {
             return await _userManager.FindByEmailAsync(email) != null;

@@ -12,20 +12,20 @@ namespace Talabat.Extintions
 {
     public static class ServisesExtins
     {
-        public static IServiceCollection AddApplicationServes(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServes(this IServiceCollection Services)
         {
-            services.AddScoped(typeof(IGenaricReposatery<>), typeof(GenaricReposatrey<>));
-            //services.AddAutoMapper(M => M.AddProfile(new ProfilsDTO()));
-            services.AddScoped(typeof(IBascketReposatry), typeof(BasketReposatry));
-            services.AddScoped(typeof(IOrderServes), typeof(OrderServeis));
-            services.AddScoped(typeof(IOrderServes), typeof(OrderServeis));
-            services.AddScoped(typeof(IUnitOfWork), typeof(UintOfwork));
+            Services.AddScoped(typeof(IGenaricReposatery<>), typeof(GenaricReposatrey<>));
+            //Services.AddAutoMapper(M => M.AddProfile(new ProfilsDTO()));
+            Services.AddScoped(typeof(IBascketReposatry), typeof(BasketReposatry));
+            Services.AddScoped(typeof(IOrderServes), typeof(OrderServeis));
+            Services.AddScoped(typeof(IOrderServes), typeof(OrderServeis));
+            Services.AddScoped(typeof(IUnitOfWork), typeof(UintOfwork));
 
 
-            services.AddScoped<ITookenServiice, TokenServes>();
+            Services.AddScoped<ITookenServiice, TokenServes>();
 
-            services.AddAutoMapper(typeof(ProfilsDTO));
-            services.Configure<ApiBehaviorOptions>(Options =>
+            Services.AddAutoMapper(typeof(ProfilsDTO));
+            Services.Configure<ApiBehaviorOptions>(Options =>
             {
                 //momdel state was not valid acthin context its contan the action active now 
                 Options.InvalidModelStateResponseFactory = ActionContext =>
@@ -40,7 +40,7 @@ namespace Talabat.Extintions
                     return new BadRequestObjectResult(ErrorrRespons);
                 };
             });
-            return services;
+            return Services;
         }
     }
 }

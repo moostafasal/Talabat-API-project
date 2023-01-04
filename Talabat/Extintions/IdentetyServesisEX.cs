@@ -11,14 +11,14 @@ namespace Talabat.Extintions
 {
     public static class IdentetyServesisEX
     {
-        public static IServiceCollection  IdentityServesiszz(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection  IdentityServesiszz(this IServiceCollection Services,IConfiguration configuration)
         {
-            services.AddIdentity<AppUser, IdentityRole>(op =>
+            Services.AddIdentity<AppUser, IdentityRole>(op =>
             {
                 //op.Password.RequireLowercase
             })
             .AddEntityFrameworkStores<AppIdenentiyDB>();
-            services.AddAuthentication(/*JwtBearerDefaults.AuthenticationScheme*/ options =>
+            Services.AddAuthentication(/*JwtBearerDefaults.AuthenticationScheme*/ options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
@@ -42,7 +42,7 @@ namespace Talabat.Extintions
                 };
             });
 
-            return services;
+            return Services;
 
         }
 

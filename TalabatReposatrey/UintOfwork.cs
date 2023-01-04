@@ -30,7 +30,6 @@ namespace TalabatReposatrey
             _context.Dispose();
         }
 
-        //like factoral desing pattern =>>
         public IGenaricReposatery<TEntity> reposatery<TEntity>() where TEntity : BaseEntity
         {
             if (_Reposatry == null)

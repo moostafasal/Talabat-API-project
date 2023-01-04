@@ -40,6 +40,9 @@ namespace Talabat.Controllers
             return Ok(new Pagin<ProductDTO>(productParams.pageIndex, productParams.Pagesize,Data,Count));
 
         }
+        //creat product by admin
+       
+        
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDTO>> GetProductbyid(int id)
